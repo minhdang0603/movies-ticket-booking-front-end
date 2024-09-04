@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/header";
+import AppProvider from "./AppProvider";
+import { cookies } from "next/headers";
+import RefreshToken from "@/components/refresh-token";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["vietnamese"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +20,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get('accessToken');
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <AppProvider
+            initialAccessToken={accessToken?.value}
+          >
+            {children}
+            <RefreshToken />
+          </AppProvider>
+          <Toaster />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
