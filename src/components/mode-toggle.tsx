@@ -3,19 +3,17 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-
 import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 export function ModeToggle() {
     const { theme, setTheme } = useTheme();
 
-    return (
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    return (mounted &&
         <Button
             variant="ghost"
             size="icon"

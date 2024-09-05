@@ -19,13 +19,26 @@ import { handleErrorApi } from "@/lib/utils";
 import { useState } from "react";
 import { toast, useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import { CheckCircleIcon } from "lucide-react";
+import { CheckCircleIcon, Eye, EyeOff } from "lucide-react";
 
 
 function RegisterForm() {
 
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [passwordValue, setPasswordValue] = useState('');
+    const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState)
+    }
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword((prevState) => !prevState)
+    }
 
     // 1. Define your form.
     const form = useForm<RegisterBodyType>({
@@ -72,7 +85,7 @@ function RegisterForm() {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel>Full name</FormLabel>
                             <FormControl>
                                 <Input placeholder="Name" {...field} />
                             </FormControl>
@@ -113,7 +126,24 @@ function RegisterForm() {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" type="password" {...field} />
+                                <div className="relative">
+                                    <Input
+                                        placeholder="Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={passwordValue}
+                                        onChange={e => {
+                                            field.onChange(e);
+                                            setPasswordValue(e.target.value)
+                                        }}
+                                    />
+
+                                    {passwordValue && <span
+                                        onClick={togglePasswordVisibility}
+                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer me-2"
+                                    >
+                                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                    </span>}
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -126,13 +156,59 @@ function RegisterForm() {
                         <FormItem>
                             <FormLabel>Confirm password</FormLabel>
                             <FormControl>
-                                <Input placeholder="Confirm password" type="password" {...field} />
+                                <div className="relative">
+                                    <Input
+                                        placeholder="Confirm password"
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        value={confirmPasswordValue}
+                                        onChange={e => {
+                                            field.onChange(e);
+                                            setConfirmPasswordValue(e.target.value);
+                                        }}
+                                    />
+
+                                    {confirmPasswordValue && <span
+                                        onClick={toggleConfirmPasswordVisibility}
+                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer me-2"
+                                    >
+                                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                    </span>}
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="!mt-8 w-full">Register</Button>
+                <Button
+                    type="submit"
+                    className="!mt-8 w-full"
+                    disabled={loading}  // Disable the button while loading
+                >
+                    {loading ? (
+                        <svg
+                            className="animate-spin h-5 w-5 mr-3 text-white inline-block"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                            />
+                            <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                            />
+                        </svg>
+                    ) : (
+                        'Register'
+                    )}
+                </Button>
                 <div className="text-center">
                     <span>Already have an account?</span>
                     <Link href="/login" passHref>

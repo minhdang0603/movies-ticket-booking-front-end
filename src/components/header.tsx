@@ -27,10 +27,10 @@ export default function Header() {
                                     <Button variant="link" className='text-lg'>Phim</Button>
                                 </HoverCardTrigger>
                                 <HoverCardContent className="w-70">
-                                    <Link href={'/'} passHref>
+                                    <Link href={'/movies/now-showing'} passHref>
                                         <Button variant={'ghost'} className='text-base px-4 py-2 text-center'>Phim đang chiếu</Button>
                                     </Link>
-                                    <Link href={'/'} passHref>
+                                    <Link href={'/movies/coming-soon'} passHref>
                                         <Button variant={'ghost'} className='text-base px-4 py-2 text-center'>Phim sắp chiếu</Button>
                                     </Link>
                                 </HoverCardContent>
@@ -38,11 +38,11 @@ export default function Header() {
 
                         </li>
                         <li>
-                            <Link href="/" className="hover:text-gray-400 text-lg" passHref>
+                            <Link href="/cinemas" className="hover:text-gray-400 text-lg" passHref>
                                 <HoverCard>
                                     <HoverCardTrigger asChild>
                                         <Button variant="link" className='text-lg'>
-                                            Tất cả phim
+                                            Tất cả rạp
                                         </Button>
                                     </HoverCardTrigger>
                                 </HoverCard>

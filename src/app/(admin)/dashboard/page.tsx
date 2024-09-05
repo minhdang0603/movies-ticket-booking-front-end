@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function MyInfoPage() {
+export default function AdminDashboard() {
   return (
     <div>
-      User page
+      Admin Page
     </div>
   )
 }
