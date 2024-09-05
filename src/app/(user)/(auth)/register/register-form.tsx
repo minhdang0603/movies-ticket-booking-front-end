@@ -12,51 +12,62 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
+import { RegisterBody, RegisterBodyType } from "@/schemaValidations/auth.schema";
 import authApiRequest from "@/apiRequests/auth";
+import { useRouter } from "next/navigation";
 import { handleErrorApi } from "@/lib/utils";
 import { useState } from "react";
-import { toast } from "@/hooks/use-toast";
+import { toast, useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { CheckCircleIcon, Eye, EyeOff } from "lucide-react";
 
 
-function LoginForm() {
+function RegisterForm() {
 
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [passwordValue, setPasswordValue] = useState('');
+    const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState)
     }
 
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword((prevState) => !prevState)
+    }
+
     // 1. Define your form.
-    const form = useForm<LoginBodyType>({
-        resolver: zodResolver(LoginBody),
+    const form = useForm<RegisterBodyType>({
+        resolver: zodResolver(RegisterBody),
         defaultValues: {
             email: "",
-            password: ""
+            name: "",
+            phone: "",
+            password: "",
+            confirmPassword: ""
         },
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: LoginBodyType) {
+    async function onSubmit(values: RegisterBodyType) {
         if (loading) return;
         setLoading(true);
         try {
-            const res = await authApiRequest.login(values);
-            await authApiRequest.auth({ accessToken: res.payload.data.token });
+            const res = await authApiRequest.register(values);
             toast({
                 description: (
                     <div className="flex items-center">
                         <CheckCircleIcon className="w-5 h-5 text-green-500 mr-2" /> {/* Success icon */}
-                        <span>Login successful</span>
+                        <span>Register successful</span>
                     </div>
                 ),
                 duration: 5000,
             });
-            location.href = '/my-info';
+            router.push("/login");
         } catch (error: any) {
             handleErrorApi({
                 error
@@ -71,12 +82,38 @@ function LoginForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 max-w-[400px] flex-shrink w-full  ">
                 <FormField
                     control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Full name</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Name" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input placeholder="Email" type="email" formNoValidate {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Phone number</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Phone number" type="text" formNoValidate {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -95,15 +132,46 @@ function LoginForm() {
                                         type={showPassword ? 'text' : 'password'}
                                         value={passwordValue}
                                         onChange={e => {
-                                            field.onChange(e)
+                                            field.onChange(e);
                                             setPasswordValue(e.target.value)
                                         }}
                                     />
+
                                     {passwordValue && <span
                                         onClick={togglePasswordVisibility}
                                         className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer me-2"
                                     >
                                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                    </span>}
+                                </div>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Confirm password</FormLabel>
+                            <FormControl>
+                                <div className="relative">
+                                    <Input
+                                        placeholder="Confirm password"
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        value={confirmPasswordValue}
+                                        onChange={e => {
+                                            field.onChange(e);
+                                            setConfirmPasswordValue(e.target.value);
+                                        }}
+                                    />
+
+                                    {confirmPasswordValue && <span
+                                        onClick={toggleConfirmPasswordVisibility}
+                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer me-2"
+                                    >
+                                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                     </span>}
                                 </div>
                             </FormControl>
@@ -118,7 +186,7 @@ function LoginForm() {
                 >
                     {loading ? (
                         <svg
-                            className="animate-spin h-5 w-5 mr-3 text-white inline-block"
+                            className="animate-spin h-5 w-5 mr-3 text-inherit inline-block"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -138,14 +206,14 @@ function LoginForm() {
                             />
                         </svg>
                     ) : (
-                        'Login'
+                        'Register'
                     )}
                 </Button>
                 <div className="text-center">
-                    <span>Don't have an account?</span>
-                    <Link href="/register" passHref>
+                    <span>Already have an account?</span>
+                    <Link href="/login" passHref>
                         <Button variant={'link'}>
-                            Sign up
+                            Sign in
                         </Button>
                     </Link>
                 </div>
@@ -154,4 +222,4 @@ function LoginForm() {
     )
 }
 
-export default LoginForm
+export default RegisterForm

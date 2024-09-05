@@ -6,3 +6,6 @@ export type PayloadJWT = {
     jti: string;  // JWT ID (unique identifier for the token)
     scope: string;  // Scope or role associated with the token (e.g., "ROLE_ADMIN")
 };
+
+export const ADMIN_ROLE = 'ADMIN';
+export const USER_ROLE = 'USER';

@@ -8,7 +8,6 @@ import { DropdownMenuArrow, DropdownMenuTrigger } from '@radix-ui/react-dropdown
 import Link from 'next/link'
 import authApiRequest from '@/apiRequests/auth'
 import { handleErrorApi } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
 
 export default function UserAvatar() {
 
@@ -28,7 +27,7 @@ export default function UserAvatar() {
             <DropdownMenuTrigger asChild className='hover:cursor-pointer'>
                 <Avatar>
                     <AvatarImage src="" alt="@shadcn" />
-                    <AvatarFallback>
+                    <AvatarFallback className='dark:bg-gray-700'>
                         <UserRound strokeWidth={1.5} />
                     </AvatarFallback>
                 </Avatar>
@@ -36,17 +35,17 @@ export default function UserAvatar() {
             <DropdownMenuContent align='center'>
                 <DropdownMenuArrow className="fill-current text-gray-800 dark:text-white" />
                 <Link href={'/my-info'} passHref>
-                    <DropdownMenuItem className='text-base'>
+                    <DropdownMenuItem className='text-base hover:cursor-pointer'>
                         <User className="mr-2 h-4 w-4" />
                         <span>Profile</span>
                     </DropdownMenuItem>
                 </Link>
-                <div onClick={handleLogout}>
-                    <DropdownMenuItem className='text-base'>
+                <a onClick={handleLogout}>
+                    <DropdownMenuItem className='text-base hover:cursor-pointer'>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Log out</span>
                     </DropdownMenuItem>
-                </div>
+                </a>
             </DropdownMenuContent>
         </DropdownMenu>
     )

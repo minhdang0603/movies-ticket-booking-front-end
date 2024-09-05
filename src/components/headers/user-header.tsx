@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
-import { ModeToggle } from './mode-toggle'
-import { Button } from './ui/button'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card'
-import UserAvatar from './avatar'
+import { ModeToggle } from '../mode-toggle'
+import { Button } from '../ui/button'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
+import UserAvatar from '../avatar'
 import { cookies } from 'next/headers'
 
-export default function Header() {
+export default function UserHeader() {
 
     const accessToken = cookies().get('accessToken')?.value;
 
     return (
-        <header className="bg-inherit text-inherit p-4 shadow-lg">
+        <header className="bg-inherit dark:bg-gray-800 text-inherit p-4 shadow-lg">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex space-x-4">
                     <Link href="/" className="text-xl font-bold">
