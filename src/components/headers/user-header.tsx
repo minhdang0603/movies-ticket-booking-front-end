@@ -1,13 +1,19 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
 import UserAvatar from '../avatar'
 import { cookies } from 'next/headers'
+import { ScrollArea } from '../ui/scroll-area'
+import cinemaApiRequest from '@/apiRequests/cinema'
+import { Separator } from '../ui/separator'
+import CinemaListHoverCard from './cinema-list-hover-card'
 
-export default function UserHeader() {
+export default async function UserHeader() {
 
+    const cityApiResponse = await cinemaApiRequest.getAllCity();
+    const cityList = cityApiResponse.payload.data;
     const accessToken = cookies().get('accessToken')?.value;
 
     return (
@@ -26,27 +32,28 @@ export default function UserHeader() {
                                 <HoverCardTrigger asChild>
                                     <Button variant="link" className='text-lg'>Phim</Button>
                                 </HoverCardTrigger>
-                                <HoverCardContent className="w-70">
-                                    <Link href={'/movies/now-showing'} passHref>
-                                        <Button variant={'ghost'} className='text-base px-4 py-2 text-center'>Phim đang chiếu</Button>
+                                <HoverCardContent className="w-full flex flex-col">
+                                    <Link href={'/now-showing'} passHref>
+                                        <Button
+                                            variant={'ghost'}
+                                            className='text-base text-center hover:text-orange-500'
+                                        >
+                                            Phim đang chiếu
+                                        </Button>
                                     </Link>
-                                    <Link href={'/movies/coming-soon'} passHref>
-                                        <Button variant={'ghost'} className='text-base px-4 py-2 text-center'>Phim sắp chiếu</Button>
+                                    <Link href={'/coming-soon'} passHref>
+                                        <Button
+                                            variant={'ghost'}
+                                            className='text-base px-4 py-2 text-center hover:text-orange-500'
+                                        >
+                                            Phim sắp chiếu
+                                        </Button>
                                     </Link>
                                 </HoverCardContent>
                             </HoverCard>
-
                         </li>
-                        <li>
-                            <Link href="/cinemas" className="hover:text-gray-400 text-lg" passHref>
-                                <HoverCard>
-                                    <HoverCardTrigger asChild>
-                                        <Button variant="link" className='text-lg'>
-                                            Tất cả rạp
-                                        </Button>
-                                    </HoverCardTrigger>
-                                </HoverCard>
-                            </Link>
+                        <li className='relative'>
+                            <CinemaListHoverCard cityList={cityList} />
                         </li>
                     </ul>
                 </nav>

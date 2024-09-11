@@ -29,7 +29,6 @@ function LoginForm() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [passwordValue, setPasswordValue] = useState('');
-    const router = useRouter();
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevState) => !prevState)
@@ -68,7 +67,7 @@ function LoginForm() {
             }
 
             if (userRole === USER_ROLE) {
-                location.href = '/my-info';
+                location.href = '/';
             }
         } catch (error: any) {
             handleErrorApi({

@@ -17,7 +17,7 @@ export function ModeToggle() {
         <Button
             variant="ghost"
             size="icon"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className='hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300'
         >
             {theme === "light" ? (

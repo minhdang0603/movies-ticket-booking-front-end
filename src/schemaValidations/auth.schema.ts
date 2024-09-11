@@ -1,5 +1,5 @@
 import z from 'zod'
-import { RoleType } from './common.schema'
+import { Role } from './common.schema'
 
 export const RegisterBody = z
   .object({
@@ -36,7 +36,7 @@ export const RegisterRes = z.object({
     name: z.string(),
     email: z.string(),
     phone: z.string(),
-    roles: z.array(RoleType)
+    roles: z.array(Role)
   })
 })
 

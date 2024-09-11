@@ -1,3 +1,6 @@
+export const ADMIN_ROLE = 'ADMIN';
+export const USER_ROLE = 'USER';
+
 export type PayloadJWT = {
     iss: string;  // Issuer of the token
     sub: string;  // Subject (usually the user identifier, like email)
@@ -7,5 +10,3 @@ export type PayloadJWT = {
     scope: string;  // Scope or role associated with the token (e.g., "ROLE_ADMIN")
 };
 
-export const ADMIN_ROLE = 'ADMIN';
-export const USER_ROLE = 'USER';

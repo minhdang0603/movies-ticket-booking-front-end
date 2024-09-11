@@ -15,6 +15,7 @@ const UNAUTHORIZED = 1007;
 const INVALID_EMAIL_PASSWORD = 1008;
 
 const AUTHENTICATION_ERROR_STATUS = 401;
+const NOT_FOUND_ERROR_STATUS = 404;
 
 export class HttpError extends Error {
 
@@ -68,7 +69,7 @@ const request = async<Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: 
     const body = options?.body ? JSON.stringify(options.body) : undefined;
     const baseHeaders = {
         'Content-Type': 'application/json',
-        Authorization: clientAccessToken.value ? `Bear ${clientAccessToken.value}` : ''
+        Authorization: clientAccessToken.value ? `Bearer ${clientAccessToken.value}` : ''
     }
 
     // Nếu không truyền baseUrl hoặc baseUrl = undefined thì lấy giá trị từ envConfig.NEXT_PUBLIC_API_ENDPOINT
@@ -115,7 +116,6 @@ const request = async<Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: 
                 const accessToken = (options?.headers as any).Authorization.split(' ')[1];
                 redirect(`/logout?accessToken=${accessToken}`);
             }
-
         } else {
             throw new HttpError(data);
         }
@@ -127,7 +127,6 @@ const request = async<Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: 
         if (['auth/login', 'auth/register'].some(item => item === normalizePath(url))) {
             const res = (payload as LoginResType).data;
             clientAccessToken.value = res.token;
-
             const jwtPayload = decodeJWT<PayloadJWT>(clientAccessToken.value);
             clientAccessToken.expireAt = new Date(jwtPayload.exp * 1000).toISOString();
 

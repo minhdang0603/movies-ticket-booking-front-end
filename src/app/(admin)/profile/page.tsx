@@ -1,9 +1,19 @@
+import accountApiRequest from '@/apiRequests/user';
+import ProfileForm from '@/components/profile-form';
+import { cookies } from 'next/headers'
 import React from 'react'
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+
+    const accessToken = cookies().get('accessToken');
+    const result = await accountApiRequest.myInfo(accessToken?.value ?? '');
+
     return (
-        <div className='text-center'>
-            Profile
+        <div className='space-y-24'>
+            <h2 className='text-center text-3xl mt-10'>Profile</h2>
+            <div className='flex justify-center'>
+                <ProfileForm profile={result.payload.data} />
+            </div>
         </div>
     )
 }
