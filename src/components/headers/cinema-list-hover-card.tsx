@@ -25,7 +25,7 @@ export default function CinemaListHoverCard({ cityList }: {
     // Function to fetch cinemas for a city
     const fetchCinemas = async (cityId: string) => {
         if (!cinemas[cityId]) {
-            const cinemaResponse = await cinemaApiRequest.getCinemaByCity(cityId);
+            const cinemaResponse = await cinemaApiRequest.getCinemasByCityAndMovie(cityId);
             setCinemas(prevState => ({
                 ...prevState,
                 [cityId]: cinemaResponse.payload.data

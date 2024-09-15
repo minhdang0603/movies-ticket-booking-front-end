@@ -5,9 +5,7 @@ import { Button } from '../ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
 import UserAvatar from '../avatar'
 import { cookies } from 'next/headers'
-import { ScrollArea } from '../ui/scroll-area'
 import cinemaApiRequest from '@/apiRequests/cinema'
-import { Separator } from '../ui/separator'
 import CinemaListHoverCard from './cinema-list-hover-card'
 
 export default async function UserHeader() {

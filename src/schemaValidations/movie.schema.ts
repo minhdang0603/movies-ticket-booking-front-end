@@ -16,9 +16,16 @@ export const MovieSchema = z.object({
     language: z.string()
 });
 
-export const MovieRes = z.object({
+export const MovieListRes = z.object({
     code: z.number(),
     data: z.array(MovieSchema),
+});
+
+export type MovieListResType = z.TypeOf<typeof MovieListRes>
+
+export const MovieRes = z.object({
+    code: z.number(),
+    data: MovieSchema
 });
 
 export type MovieResType = z.TypeOf<typeof MovieRes>

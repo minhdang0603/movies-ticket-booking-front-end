@@ -30,3 +30,10 @@ export const normalizePath = (path: string) => {
 export const decodeJWT = <Payload = any>(token: string) => {
   return jwt.decode(token) as Payload;
 }
+
+export const normalizeTitle = (title: string) => {
+  title = title.toLowerCase();
+  let words = title.split(' ');
+  words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+  return words.join(' ');
+}

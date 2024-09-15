@@ -24,6 +24,7 @@ export default function RootUserLayout({
 
   const cookieStore = cookies();
   const accessToken = cookieStore.get('accessToken');
+  
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>

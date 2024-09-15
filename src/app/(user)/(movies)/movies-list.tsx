@@ -2,24 +2,18 @@
 
 import { useTrailer } from '@/app/AppProvider'
 import { Button } from '@/components/ui/button'
-import { MovieResType } from '@/schemaValidations/movie.schema'
+import { normalizeTitle } from '@/lib/utils'
+import { MovieListResType } from '@/schemaValidations/movie.schema'
 import { CirclePlay, Ticket } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 export default function MoviesList({ moviesList }: {
-    moviesList: MovieResType['data']
+    moviesList: MovieListResType['data']
 }) {
 
     const { openTrailer } = useTrailer();
-
-    const normalize = (title: string) => {
-        title = title.toLowerCase();
-        let words = title.split(' ');
-        words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-        return words.join(' ');
-    }
 
     return (
         <>
@@ -51,7 +45,7 @@ export default function MoviesList({ moviesList }: {
                             }
                             <div className='absolute inset-0 bg-[rgba(0,0,0,.5)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-lg'>
                                 <div className='flex flex-col justify-center items-center w-full h-full gap-3'>
-                                    <Link href={'/'} className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
+                                    <Link href={`/booking/${movie.id}`} className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
                                         <Ticket className='me-1' size={16} />
                                         Mua vé
                                     </Link>
@@ -70,7 +64,7 @@ export default function MoviesList({ moviesList }: {
                         </div>
                         <div className='mt-3 cursor-pointer'>
                             <h3 className='text-sm font-semibold'>
-                                {normalize(movie.title)}
+                                {normalizeTitle(movie.title)}
                             </h3>
                         </div>
                     </li>

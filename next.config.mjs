@@ -5,6 +5,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'iguov8nhvyobj.vcdn.cloud'
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.galaxycine.vn'
             }
         ]
     }
