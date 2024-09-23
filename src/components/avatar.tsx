@@ -37,13 +37,13 @@ export default function UserAvatar() {
                 <Link href={'/my-info'} passHref>
                     <DropdownMenuItem className='text-base hover:cursor-pointer'>
                         <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
+                        <span>Tài khoản</span>
                     </DropdownMenuItem>
                 </Link>
                 <a onClick={handleLogout}>
                     <DropdownMenuItem className='text-base hover:cursor-pointer'>
                         <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
+                        <span>Đăng xuất</span>
                     </DropdownMenuItem>
                 </a>
             </DropdownMenuContent>

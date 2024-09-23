@@ -70,8 +70,6 @@ function ProfileForm({ profile, roles }: {
         }
     };
 
-    const checkRole = (role: RoleType) => form.getValues('roles').includes(role.name)
-
 
     return (
         <Form {...form}>

@@ -15,7 +15,7 @@ export default async function UserHeader() {
     const accessToken = cookies().get('accessToken')?.value;
 
     return (
-        <header className="bg-inherit dark:bg-gray-800 text-inherit p-4 shadow-lg">
+        <header className="bg-inherit dark:bg-gray-800 text-inherit p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex space-x-4">
                     <Link href="/" className="text-xl font-bold">
@@ -62,7 +62,7 @@ export default async function UserHeader() {
                             ? <UserAvatar />
                             : <Link href="/login">
                                 <Button size={'sm'} variant={'link'} className='bg-inherit text-inherit'>
-                                    Login
+                                    Đăng nhập
                                 </Button>
                             </Link>
                     }

@@ -19,7 +19,6 @@ import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { CheckCircleIcon, Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { ADMIN_ROLE, PayloadJWT, USER_ROLE } from "@/type";
 import { clientAccessToken } from "@/lib/http";
 

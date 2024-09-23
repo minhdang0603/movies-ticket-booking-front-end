@@ -22,7 +22,7 @@ export class HttpError extends Error {
     status: number;
     payload: {
         message: string,
-        [key: string]: any
+        code: number
     }
 
     constructor({ status, payload }: { status: number, payload: any }) {

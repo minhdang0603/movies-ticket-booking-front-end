@@ -16,6 +16,8 @@ export const CinemaSchema = z.object({
     cinemaId: z.string(),
     name: z.string(),
     address: z.string(),
+    latitude: z.string(),
+    longitude: z.string(),
     fax: z.string(),
     hotline: z.string(),
     city: CitySchema,

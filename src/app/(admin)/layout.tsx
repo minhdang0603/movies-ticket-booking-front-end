@@ -3,14 +3,14 @@ import AdminHeader from '@/components/headers/admin-header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Metadata } from 'next';
 import "../globals.css";
-import { Inter } from 'next/font/google';
+import { Inter, Nunito_Sans } from 'next/font/google';
 import { cookies } from 'next/headers';
 import React from 'react';
 import AppProvider from '../AppProvider';
 import RefreshToken from '@/components/refresh-token';
 import { Toaster } from '@/components/ui/toaster';
 
-const inter = Inter({ subsets: ["vietnamese"] });
+const nunito = Nunito_Sans({ subsets: ["vietnamese"] });
 
 export const metadata: Metadata = {
     title: "Admin",
@@ -27,7 +27,7 @@ export default function RootAdminLayout({
     const accessToken = cookieStore.get('accessToken');
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={nunito.className}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -41,7 +41,7 @@ export default function RootAdminLayout({
                             <AdminAside />
                             <div className="flex flex-col flex-1 ml-64">
                                 <AdminHeader />
-                                <main className="flex-1 mt-16 p-4 overflow-y-auto">
+                                <main className="flex-1 mt-20 p-4 overflow-y-auto">
                                     {children}
                                 </main>
                             </div>

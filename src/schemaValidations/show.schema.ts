@@ -23,3 +23,10 @@ export const ShowListRes = z.object({
 });
 
 export type ShowListResType = z.TypeOf<typeof ShowListRes>
+
+export const ShowRes = z.object({
+    code: z.number(),
+    data: ShowSchema
+});
+
+export type ShowResType = z.TypeOf<typeof ShowRes>

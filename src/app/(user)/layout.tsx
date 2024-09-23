@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -9,7 +9,7 @@ import RefreshToken from "@/components/refresh-token";
 import UserHeader from "@/components/headers/user-header";
 import TrailerModal from "@/components/trailer-modal";
 
-const inter = Inter({ subsets: ["vietnamese"] });
+const nunito = Nunito_Sans({ subsets: ["vietnamese"] });
 
 export const metadata: Metadata = {
   title: "My Cinema",
@@ -24,10 +24,10 @@ export default function RootUserLayout({
 
   const cookieStore = cookies();
   const accessToken = cookieStore.get('accessToken');
-  
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={nunito.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

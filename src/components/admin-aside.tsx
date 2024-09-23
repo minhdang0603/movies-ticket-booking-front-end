@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from './ui/button'
 import Link from 'next/link'
-import { LayoutDashboard, User, Users } from 'lucide-react'
+import { Database, LayoutDashboard, User, Users } from 'lucide-react'
 
 export default function AdminAside() {
     return (
@@ -48,6 +48,19 @@ export default function AdminAside() {
                                         <User className="text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-600 transition-colors duration-300" />
                                         <span>
                                             Profile
+                                        </span>
+                                    </Button>
+                                </Link>
+                            </li>
+                            <li className='w-full'>
+                                <Link href={'/update-data'} passHref>
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full text-base justify-start space-x-3 group hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                                    >
+                                        <Database className="text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-600 transition-colors duration-300" />
+                                        <span>
+                                            Update data
                                         </span>
                                     </Button>
                                 </Link>

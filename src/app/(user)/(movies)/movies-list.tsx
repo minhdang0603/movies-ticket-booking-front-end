@@ -45,7 +45,7 @@ export default function MoviesList({ moviesList }: {
                             }
                             <div className='absolute inset-0 bg-[rgba(0,0,0,.5)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out rounded-lg'>
                                 <div className='flex flex-col justify-center items-center w-full h-full gap-3'>
-                                    <Link href={`/booking/${movie.id}`} className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
+                                    <Link href={`/movies/${movie.id}`} className='text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]'>
                                         <Ticket className='me-1' size={16} />
                                         Mua vé
                                     </Link>

@@ -68,12 +68,14 @@ export default function CinemaListHoverCard({ cityList }: {
                                     {cinemas[city.id] ? (
                                         <ScrollArea className={cinemas[city.id]?.length > 6 ? "h-full" : "h-auto"}>
                                             {cinemas[city.id].map((cinema, index) => (
-                                                <Link href={'/'} passHref key={cinema.cinemaId}>
+                                                <Link href={`/cinema/${cinema.cinemaId}`} passHref key={cinema.cinemaId}>
                                                     {index > 0 && <Separator className="my-2" />}
                                                     <Button
                                                         variant={'ghost'}
                                                         className='text-sm flex justify-start w-full hover:text-orange-500'
-                                                    >{cinema.name}</Button>
+                                                    >
+                                                        {cinema.name}
+                                                    </Button>
                                                 </Link>
                                             ))}
                                         </ScrollArea>

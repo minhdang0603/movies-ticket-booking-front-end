@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { LogOut } from 'lucide-react'
@@ -8,6 +8,9 @@ import { handleErrorApi } from '@/lib/utils'
 import authApiRequest from '@/apiRequests/auth'
 
 export default function AdminHeader() {
+
+    const [start, setStart] = useState<number>();
+    const [end, setEnd] = useState<number>();
 
     const handleLogout = async () => {
         try {
