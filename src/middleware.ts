@@ -5,7 +5,7 @@ import { ADMIN_ROLE, PayloadJWT, USER_ROLE } from './type';
 
 const privatePath = ['/my-info', '/dashboard', '/users', '/booking'];
 const authPath = ['/login', '/register'];
-const adminPath = ['/dashboard', '/users', '/profile', '/update-data'];
+const adminPath = ['/dashboard', '/users', '/profile', '/update-data', '/chat'];
 
 
 // This function can be marked `async` if using `await` inside
@@ -47,7 +47,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/my-info', '/login', '/register', '/dashboard', '/users/:path*', '/profile', '/booking', '/update-data',
+    '/my-info', '/login', '/register', '/dashboard', '/users/:path*', '/profile', '/booking', '/update-data', '/chat/:path*',
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }

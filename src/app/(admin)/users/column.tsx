@@ -7,19 +7,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown, CheckCircleIcon, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { toast } from "@/hooks/use-toast";
-import accountApiRequest from "@/apiRequests/user";
-import { useRouter } from "next/navigation";
 import DeleteUserButton from "@/components/delete-user-button";
 
 
 
 export const columns: ColumnDef<UserListResType['data'][number]>[] = [
-    {
-        accessorKey: "userId",
-        header: "User Id",
-        size: 350
-    },
     {
         accessorKey: "email",
         header: ({ column }) => {
@@ -79,11 +71,16 @@ export const columns: ColumnDef<UserListResType['data'][number]>[] = [
                             Copy user ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Link href={`/users/${user.userId}`}>
+                        <Link href={`/chat/${user.userId}`} passHref>
+                            <DropdownMenuItem>
+                                Chat
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link href={`/users/${user.userId}`} passHref>
+                            <DropdownMenuItem>
                                 Edit user
-                            </Link>
-                        </DropdownMenuItem>
+                            </DropdownMenuItem>
+                        </Link>
                         <DropdownMenuItem>
                             <DeleteUserButton userId={user.userId} />
                         </DropdownMenuItem>

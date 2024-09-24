@@ -8,14 +8,7 @@ type CustomOptions = Omit<RequestInit, 'method'> & {
     baseUrl?: string
 }
 
-const USER_EXISTED = 1002;
-const USER_NOT_EXISTED = 1005;
-const UNAUTHENTICATED = 1006;
-const UNAUTHORIZED = 1007;
-const INVALID_EMAIL_PASSWORD = 1008;
-
 const AUTHENTICATION_ERROR_STATUS = 401;
-const NOT_FOUND_ERROR_STATUS = 404;
 
 export class HttpError extends Error {
 
