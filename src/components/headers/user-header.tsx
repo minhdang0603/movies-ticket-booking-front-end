@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
-import UserAvatar from '../avatar'
 import { cookies } from 'next/headers'
 import cinemaApiRequest from '@/apiRequests/cinema'
 import CinemaListHoverCard from './cinema-list-hover-card'
+import UserAvatar from '../user-avatar'
 
 export default async function UserHeader() {
 

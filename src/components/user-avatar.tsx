@@ -34,6 +34,12 @@ export default function UserAvatar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align='center'>
                 <DropdownMenuArrow className="fill-current text-gray-800 dark:text-white" />
+                <Link href={'/admin-chat'} passHref>
+                    <DropdownMenuItem className='text-base hover:cursor-pointer'>
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Liên hệ với admin</span>
+                    </DropdownMenuItem>
+                </Link>
                 <Link href={'/my-info'} passHref>
                     <DropdownMenuItem className='text-base hover:cursor-pointer'>
                         <User className="mr-2 h-4 w-4" />

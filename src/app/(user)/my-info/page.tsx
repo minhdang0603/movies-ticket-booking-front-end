@@ -1,5 +1,6 @@
 import bookingApiRequest from '@/apiRequests/booking';
 import accountApiRequest from '@/apiRequests/user';
+import BookingHistory from '@/components/booking-history';
 import ProfileForm from '@/components/profile-form';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cookies } from 'next/headers';
@@ -19,16 +20,7 @@ export default async function MyInfoPage() {
           <TabsTrigger value="profile">Thông tin cá nhân</TabsTrigger>
         </TabsList>
         <TabsContent value="history">
-          <div className='flex justify-center'>
-            {bookings.length > 0
-              ? (
-                <></>
-              )
-              : (
-                <h3 className='text-center text-sm font-normal not-italic text-gray-400'>Chưa có giao dịch nào</h3>
-              )
-            }
-          </div>
+          <BookingHistory bookings={bookings} />
         </TabsContent>
         <TabsContent value="profile">
           <div className='flex justify-center'>

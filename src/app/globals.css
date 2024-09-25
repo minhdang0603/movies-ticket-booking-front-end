@@ -12,6 +12,20 @@
   display: none;
 }
 
+.chat-container::-webkit-scrollbar {
+  display: block;
+  /* Show scrollbar */
+  width: 6px;
+  /* Set the scrollbar width */
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Style the scrollbar thumb */
+  border-radius: 5px;
+  /* Make it rounder */
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

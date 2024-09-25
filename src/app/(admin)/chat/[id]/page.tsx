@@ -12,14 +12,16 @@ export default async function ChatPage({ params }: {
 
   const accessToken = cookies().get('accessToken');
   const recipientId = params.id;
+  const recipientResponse = await accountApiRequest.getUserById(accessToken?.value ?? '', recipientId);
+  const recipient = recipientResponse.payload.data;
   const myInfoResponse = await accountApiRequest.myInfo(accessToken?.value ?? '');
   const sender = myInfoResponse.payload.data;
-  const messagesResponse = await chatApiRequest.getMessages(sender.userId, recipientId, accessToken?.value ?? '');
+  const messagesResponse = await chatApiRequest.getMessages(sender.email, recipient.email, accessToken?.value ?? '');
   const messageList = messagesResponse.payload.data;
 
   return (
     <div className='h-full'>
-      <ChatBox recipientId={recipientId} messages={messageList} />
+      <ChatBox recipientEmail={recipient.email} messageList={messageList} senderEmail={sender.email} recipientName={recipient.name}/>
     </div>
   )
 }

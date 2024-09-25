@@ -26,8 +26,6 @@ export default function UpdateDataForm() {
             setSelectedDate(date);
             const index = differenceInDays(date, today) + 1;
             setDateIndex(index);
-            console.log(index);
-
         }
     };
 
@@ -94,7 +92,6 @@ export default function UpdateDataForm() {
                                 selected={selectedDate}
                                 onSelect={handleDateSelect}
                                 disabled={(date) => date < today || date > addDays(today, 7)}
-                                initialFocus
                             />
                         </PopoverContent>
                     </Popover>

@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { Role } from "./common.schema";
-import { ShowSchema } from "./show.schema";
+import { AudioSchema, ShowSchema } from "./show.schema";
+import { MovieSchema } from "./movie.schema";
+import { CinemaSchema } from "./cinema.schema";
 
 export const BookingSchema = z.object({
     id: z.string(),
@@ -13,7 +15,12 @@ export const BookingSchema = z.object({
         phone: z.string(),
         roles: z.array(Role)
     }),
-    show: ShowSchema
+    showDate: z.string(),
+    showTime: z.string(),
+    price: z.number(),
+    audio: AudioSchema,
+    movie: MovieSchema,
+    cinema: CinemaSchema
 });
 
 export const BookingListRes = z.object({

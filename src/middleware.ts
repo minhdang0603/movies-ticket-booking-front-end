@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { decodeJWT } from './lib/utils';
 import { ADMIN_ROLE, PayloadJWT, USER_ROLE } from './type';
 
-const privatePath = ['/my-info', '/dashboard', '/users', '/booking'];
+const privatePath = ['/my-info', '/dashboard', '/users', '/booking', '/admin-chat'];
 const authPath = ['/login', '/register'];
 const adminPath = ['/dashboard', '/users', '/profile', '/update-data', '/chat'];
 
@@ -47,7 +47,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/my-info', '/login', '/register', '/dashboard', '/users/:path*', '/profile', '/booking', '/update-data', '/chat/:path*',
+    '/my-info', '/login', '/register', '/dashboard', '/users/:path*', '/profile', '/booking', '/update-data', '/chat/:path*', '/admin-chat',
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }

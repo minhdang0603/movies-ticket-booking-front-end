@@ -5,17 +5,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Client } from '@stomp/stompjs';
+import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import envConfig from '@/config';
 import { clientAccessToken } from '@/lib/http';
-import { MessageListResType } from '@/schemaValidations/chat.message.schema';
+import { MessageBody, MessageBodyType, MessageListResType } from '@/schemaValidations/chat.message.schema';
+import { Separator } from './ui/separator';
+import { CircleUserRound, Send } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem } from './ui/form';
 
-const ChatBox = ({ recipientId, messages }: { recipientId: string, messages: MessageListResType['data'] }) => {
+const ChatBox = ({ recipientEmail, messageList, senderEmail, recipientName }: {
+    recipientEmail: string,
+    messageList: MessageListResType['data'],
+    senderEmail: string,
+    recipientName: string
+}) => {
 
+    const [messages, setMessages] = useState<MessageListResType['data']>(messageList);
+
+    const scrollRef = useRef<HTMLDivElement | null>(null);
     const stompClient = useRef<Client | null>(null);
+
     useEffect(() => {
         connect();
+        scrollToBottom();
         return () => {
             if (stompClient.current) {
                 stompClient.current.deactivate();
@@ -29,9 +44,7 @@ const ChatBox = ({ recipientId, messages }: { recipientId: string, messages: Mes
             connectHeaders: {
                 Authorization: `Bearer ${clientAccessToken.value}`
             },
-            onConnect: () => {
-                console.log('Connected');
-            },
+            onConnect: handleConnected,
             onStompError: (frame) => {
                 console.error('Broker reported error: ' + frame.headers['message']);
                 console.error('Additional details: ' + frame.body);
@@ -42,64 +55,131 @@ const ChatBox = ({ recipientId, messages }: { recipientId: string, messages: Mes
         stompClient.current = client;
     };
 
-    const [inputMessage, setInputMessage] = useState('');
+    const onSubmit = (values: MessageBodyType) => {
+        if (values.content.trim() === '') return;
 
+        const newMessage = [
+            {
+                id: '1',
+                senderEmail,
+                recipientEmail,
+                content: values.content.trim(),
+                timestamp: new Date()
+            }
+        ];
 
-    // Create a ref for the ScrollArea to scroll to the bottom
-    const scrollRef = useRef<HTMLDivElement>(null);
+        setMessages(pre => [
+            ...pre,
+            ...newMessage
+        ]);
+
+        if (values.content && stompClient.current) {
+            stompClient.current.publish({
+                destination: "/app/chat",
+                body: JSON.stringify({
+                    senderEmail: senderEmail,
+                    recipientEmail: recipientEmail,
+                    content: values.content.trim(),
+                    timestamp: new Date()
+                })
+            });
+            console.log("Message sent");
+        }
+
+        form.reset();
+    };
+
+    const handleConnected = () => {
+        stompClient.current?.subscribe(`/user/${senderEmail}/queue/messages`, onMessageReceived);
+    };
+
+    const onMessageReceived = (payload: IMessage) => {
+        const messageData = JSON.parse(payload.body);
+
+        setMessages(pre => [
+            ...pre,
+            messageData
+        ]);
+    };
+
+    const scrollToBottom = () => {
+        if (scrollRef.current) {
+            scrollRef.current!.scrollTop = scrollRef.current!.scrollHeight;
+        }
+    };
 
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
+        scrollToBottom();
     }, [messages]);
 
-    const handleSendMessage = () => {
-        if (inputMessage.trim() === '') return;
-
-        const newMessage = { text: inputMessage, from: 'sender' };
-        setInputMessage('');
-
-        // Simulate bot response after a delay
-        setTimeout(() => {
-
-        }, 1000);
-    };
+    const form = useForm<MessageBodyType>({
+        resolver: zodResolver(MessageBody),
+        defaultValues: {
+            content: '',
+            senderEmail: senderEmail,
+            recipientEmail: recipientEmail,
+            timestamp: new Date()
+        },
+    });
 
     return (
         <Card className="w-full h-full shadow-lg">
             <CardContent className="p-4 h-full flex flex-col justify-between">
-                {/* Scrollable message area */}
-                <ScrollArea className="h-72 rounded-md p-4 mb-4 flex-1" ref={scrollRef}>
-                    <div className="space-y-2">
-                        {messages.map((message, index) => (
-                            <div
-                                key={index}
-                                className={`flex ${message.recipient.data.userId === recipientId ? 'justify-start' : 'justify-end'}`}
-                            >
+                <div className="mb-2 space-x-2 flex">
+                    <CircleUserRound />
+                    <h2 className="text-lg font-semibold">{recipientName}</h2>
+                </div>
+
+                <Separator />
+
+                <div
+                    className="chat-container h-72 rounded-md p-4 mb-4 flex-1 overflow-scroll"
+                    ref={scrollRef}
+                >
+                    {messages.length > 0 && (
+                        <div className="space-y-2" >
+                            {messages.map((message, index) => (
                                 <div
-                                    className={`${message.recipient.data.userId === recipientId ? 'bg-gray-300 text-white' : 'bg-blue-500 text-black'
-                                        } p-2 rounded-lg max-w-xs`}
+                                    key={index}
+                                    className={`flex ${message.senderEmail === senderEmail ? 'justify-end' : 'justify-start'}`}
                                 >
-                                    {message.content}
+                                    <div
+                                        className={`${message.senderEmail === senderEmail ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'
+                                            } p-2 rounded-lg max-w-xs`}
+                                    >
+                                        {message.content}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </ScrollArea>
+                            ))}
+                        </div>
+                    )}
+                </div>
 
                 {/* Input and send button aligned at the bottom */}
-                <div className="flex space-x-2">
-                    <Input
-                        placeholder="Type a message..."
-                        value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
-                        className="flex-1"
-                    />
-                    <Button onClick={handleSendMessage} variant="outline">
-                        Send
-                    </Button>
-                </div>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='flex w-full space-x-2'>
+                        <FormField
+                            control={form.control}
+                            name="content"
+                            render={({ field }) => (
+                                <FormItem className='flex-1'>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Type a message..."
+                                            className="flex-1"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+
+                        <Button type='submit' variant="outline">
+                            <Send className="w-5 h-5 mr-2" />
+                            Send
+                        </Button>
+                    </form>
+                </Form>
             </CardContent>
         </Card>
     );
