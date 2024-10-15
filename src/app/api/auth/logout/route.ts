@@ -1,4 +1,4 @@
-import authApiRequest from '@/apiRequests/auth';
+import authApiRequest from '@/services/auth';
 import { HttpError } from '@/lib/http';
 import { cookies } from 'next/headers';
 

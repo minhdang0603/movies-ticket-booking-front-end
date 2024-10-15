@@ -6,18 +6,20 @@ import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { CheckCircleIcon, Minus, Plus } from 'lucide-react'  // Importing icons from lucide-react
+import { CheckCircleIcon, Minus, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import accountApiRequest from '@/apiRequests/user'
-import bookingApiRequest from '@/apiRequests/booking'
-import paymentApiRequest from '@/apiRequests/payment'
-import mailApiRequest from '@/apiRequests/mail'
+import accountApiRequest from '@/services/user'
+import bookingApiRequest from '@/services/booking'
+import paymentApiRequest from '@/services/payment'
+import mailApiRequest from '@/services/mail'
 import { toast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 export default function BookingInfo({ show }: {
     show: ShowResType['data']
 }) {
 
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [numberOfTickets, setNumberOfTickets] = useState(1);
 
@@ -61,8 +63,10 @@ export default function BookingInfo({ show }: {
                 bookingId: bookingResponse.payload.data.id
             };
             console.log("Payment date: " + paymentCreationBody.payDate);
-            const paymentResponse = await paymentApiRequest.createPaymentClient(paymentCreationBody);
+            await paymentApiRequest.createPaymentClient(paymentCreationBody);
             await mailApiRequest.sendMail(bookingResponse.payload.data);
+
+            router.push('/my-info');
 
             toast({
                 description: (

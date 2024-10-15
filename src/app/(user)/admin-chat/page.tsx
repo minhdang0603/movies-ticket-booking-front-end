@@ -1,5 +1,5 @@
-import chatApiRequest from '@/apiRequests/chat';
-import accountApiRequest from '@/apiRequests/user';
+import chatApiRequest from '@/services/chat';
+import accountApiRequest from '@/services/user';
 import ChatBox from '@/components/chat-box';
 import { cookies } from 'next/headers';
 import React from 'react'

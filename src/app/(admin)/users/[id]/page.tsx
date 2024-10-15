@@ -1,5 +1,5 @@
-import roleApiRequest from '@/apiRequests/role';
-import accountApiRequest from '@/apiRequests/user';
+import roleApiRequest from '@/services/role';
+import accountApiRequest from '@/services/user';
 import ProfileForm from '@/components/profile-form';
 import { cookies } from 'next/headers';
 import React from 'react'

@@ -1,5 +1,5 @@
-import bookingApiRequest from '@/apiRequests/booking';
-import accountApiRequest from '@/apiRequests/user';
+import bookingApiRequest from '@/services/booking';
+import accountApiRequest from '@/services/user';
 import BookingHistory from '@/components/booking-history';
 import ProfileForm from '@/components/profile-form';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

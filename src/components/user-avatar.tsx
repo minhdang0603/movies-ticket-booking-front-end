@@ -6,7 +6,7 @@ import { LogOut, User, UserRound } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from './ui/dropdown-menu'
 import { DropdownMenuArrow, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import Link from 'next/link'
-import authApiRequest from '@/apiRequests/auth'
+import authApiRequest from '@/services/auth'
 import { handleErrorApi } from '@/lib/utils'
 
 export default function UserAvatar() {

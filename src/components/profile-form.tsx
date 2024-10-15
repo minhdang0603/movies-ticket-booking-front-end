@@ -19,7 +19,7 @@ import { toast } from "@/hooks/use-toast";
 import { CheckCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AccountResType, UpdateMeBody, UpdateMeBodyType } from "@/schemaValidations/user.schema";
-import accountApiRequest from "@/apiRequests/user";
+import accountApiRequest from "@/services/user";
 import { RoleType } from "@/schemaValidations/common.schema";
 
 type Profile = AccountResType['data'];

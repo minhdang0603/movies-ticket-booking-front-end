@@ -1,6 +1,6 @@
 'use client'
 
-import { useTrailer } from '@/app/AppProvider'
+import { useApp } from '@/app/AppProvider'
 import { Button } from '@/components/ui/button'
 import { normalizeTitle } from '@/lib/utils'
 import { MovieListResType } from '@/schemaValidations/movie.schema'
@@ -13,7 +13,7 @@ export default function MoviesList({ moviesList }: {
     moviesList: MovieListResType['data']
 }) {
 
-    const { openTrailer } = useTrailer();
+    const { openTrailer } = useApp();
 
     return (
         <>

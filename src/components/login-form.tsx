@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
-import authApiRequest from "@/apiRequests/auth";
+import authApiRequest from "@/services/auth";
 import { decodeJWT, handleErrorApi } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
@@ -48,7 +48,9 @@ function LoginForm() {
         setLoading(true);
         try {
             const res = await authApiRequest.login(values);
-            await authApiRequest.auth({ accessToken: res.payload.data.token });
+            console.log(res);
+            
+            await authApiRequest.auth({ accessToken: res.payload.data.token, expiryTime: res.payload.data.expiryTime });
             toast({
                 description: (
                     <div className="flex items-center">

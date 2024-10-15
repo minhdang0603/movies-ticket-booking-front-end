@@ -1,5 +1,5 @@
-import chatApiRequest from '@/apiRequests/chat';
-import accountApiRequest from '@/apiRequests/user';
+import chatApiRequest from '@/services/chat';
+import accountApiRequest from '@/services/user';
 import ChatBox from '@/components/chat-box'
 import { cookies } from 'next/headers';
 import React from 'react'
@@ -21,7 +21,7 @@ export default async function ChatPage({ params }: {
 
   return (
     <div className='h-full'>
-      <ChatBox recipientEmail={recipient.email} messageList={messageList} senderEmail={sender.email} recipientName={recipient.name}/>
+      <ChatBox recipientEmail={recipient.email} messageList={messageList} senderEmail={sender.email} recipientName={recipient.name} />
     </div>
   )
 }

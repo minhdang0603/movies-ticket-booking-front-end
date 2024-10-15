@@ -1,6 +1,6 @@
-import movieApiRequest from '@/apiRequests/movie';
+import movieApiRequest from '@/services/movie';
 import React from 'react'
-import MoviesList from '../movies-list';
+import MoviesList from '@/components/movies-list';
 
 export default async function ComingSoonPage() {
 

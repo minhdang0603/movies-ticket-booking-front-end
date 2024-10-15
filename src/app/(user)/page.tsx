@@ -1,4 +1,4 @@
-import movieApiRequest from "@/apiRequests/movie";
+import movieApiRequest from "@/services/movie";
 
 export default async function Home() {
 

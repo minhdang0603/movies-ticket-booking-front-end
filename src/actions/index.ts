@@ -1,8 +1,8 @@
 'use server'
 
-import cinemaApiRequest from "@/apiRequests/cinema";
-import mapboxApiRequest from "@/apiRequests/mapbox";
-import showApiRequest from "@/apiRequests/show";
+import cinemaApiRequest from "@/services/cinema";
+import mapboxApiRequest from "@/services/mapbox";
+import showApiRequest from "@/services/show";
 import { cookies } from "next/headers";
 
 type ShowProps = {

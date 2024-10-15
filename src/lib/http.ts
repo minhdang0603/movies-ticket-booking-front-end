@@ -120,8 +120,7 @@ const request = async<Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: 
         if (['auth/login', 'auth/register'].some(item => item === normalizePath(url))) {
             const res = (payload as LoginResType).data;
             clientAccessToken.value = res.token;
-            const jwtPayload = decodeJWT<PayloadJWT>(clientAccessToken.value);
-            clientAccessToken.expireAt = new Date(jwtPayload.exp * 1000).toISOString();
+            clientAccessToken.expireAt = new Date(res.expiryTime).toISOString();
 
         } else if ('auth/logout' === normalizePath(url)) {
             clientAccessToken.value = '';

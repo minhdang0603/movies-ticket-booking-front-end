@@ -3,14 +3,14 @@
 import { clientAccessToken } from '@/lib/http';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-interface TrailerContextProps {
+interface AppContextProps {
     videoUrl: string;
     isModalOpen: boolean;
     openTrailer: (videoUrl: string) => void;
     closeTrailer: () => void;
 }
 
-const TrailerContext = createContext<TrailerContextProps>({
+const AppContext = createContext<AppContextProps>({
     videoUrl: '',
     isModalOpen: false,
     openTrailer: () => { },
@@ -42,10 +42,10 @@ export default function AppProvider({ children, initialAccessToken = '' }: {
     }, [initialAccessToken]);
 
     return (
-        <TrailerContext.Provider value={{ videoUrl, isModalOpen, openTrailer, closeTrailer }}>
+        <AppContext.Provider value={{ videoUrl, isModalOpen, openTrailer, closeTrailer }}>
             {children}
-        </TrailerContext.Provider>
+        </AppContext.Provider>
     )
 }
 
-export const useTrailer = () => useContext(TrailerContext);
+export const useApp = () => useContext(AppContext);

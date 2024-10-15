@@ -1,6 +1,6 @@
 'use client'
 
-import authApiRequest from '@/apiRequests/auth';
+import authApiRequest from '@/services/auth';
 import { clientAccessToken } from '@/lib/http';
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'

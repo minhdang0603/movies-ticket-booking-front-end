@@ -1,12 +1,12 @@
-import movieApiRequest from '@/apiRequests/movie';
+import movieApiRequest from '@/services/movie';
 import { normalizeTitle } from '@/lib/utils';
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 import { Calendar, Clock4 } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react'
-import cinemaApiRequest from '@/apiRequests/cinema';
-import MovieShowTime from './movie-show-time';
-import showApiRequest from '@/apiRequests/show';
+import React from 'react';
+import cinemaApiRequest from '@/services/cinema';
+import MovieShowTime from '@/components/movie-show-time';
+import showApiRequest from '@/services/show';
 
 export default async function BookingPage({ params }: { params: { id: string } }) {
 

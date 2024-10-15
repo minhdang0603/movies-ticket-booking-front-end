@@ -4,7 +4,7 @@ import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
 import { cookies } from 'next/headers'
-import cinemaApiRequest from '@/apiRequests/cinema'
+import cinemaApiRequest from '@/services/cinema'
 import CinemaListHoverCard from './cinema-list-hover-card'
 import UserAvatar from '../user-avatar'
 

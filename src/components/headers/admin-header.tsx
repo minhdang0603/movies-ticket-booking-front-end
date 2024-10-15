@@ -5,7 +5,7 @@ import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { LogOut } from 'lucide-react'
 import { handleErrorApi } from '@/lib/utils'
-import authApiRequest from '@/apiRequests/auth'
+import authApiRequest from '@/services/auth'
 
 export default function AdminHeader() {
 

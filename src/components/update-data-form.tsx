@@ -6,7 +6,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format, addDays, differenceInDays } from 'date-fns';
 import { cn, handleErrorApi } from '@/lib/utils';
-import crawlApiRequest from '@/apiRequests/crawl';
+import crawlApiRequest from '@/services/crawl';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircleIcon } from 'lucide-react';
 import BeatLoader from 'react-spinners/BeatLoader';

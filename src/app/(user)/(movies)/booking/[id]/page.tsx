@@ -1,7 +1,6 @@
-import showApiRequest from '@/apiRequests/show';
+import showApiRequest from '@/services/show';
 import { cookies } from 'next/headers';
-import BookingInfo from './booking-info';
-import { notFound } from 'next/navigation';
+import BookingInfo from '@/components/booking-info';
 
 export default async function BookingPage({ params }: { params: { id: string } }) {
 

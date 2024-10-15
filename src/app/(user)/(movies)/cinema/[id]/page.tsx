@@ -1,6 +1,6 @@
-import cinemaApiRequest from '@/apiRequests/cinema';
+import cinemaApiRequest from '@/services/cinema';
 import CinemaImageCarousel from '@/components/cinema-image-carousel';
-import CinemaInfo from './cinema-info';
+import CinemaInfo from '@/components/cinema-info';
 
 export default async function CinemaBookingPage({ params }: { params: { id: string } }) {
     const cinemaId = params.id;

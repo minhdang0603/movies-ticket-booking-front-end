@@ -1,10 +1,10 @@
 'use client';
 
-import { useTrailer } from '@/app/AppProvider';
-import React, { useEffect, useState } from 'react';
+import { useApp } from '@/app/AppProvider';
+import React, { useState } from 'react';
 
 const TrailerModal = () => {
-    const { videoUrl, isModalOpen, closeTrailer } = useTrailer();
+    const { videoUrl, isModalOpen, closeTrailer } = useApp();
     const [isClosing, setIsClosing] = useState(false);
 
 

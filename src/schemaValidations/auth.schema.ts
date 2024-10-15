@@ -26,7 +26,7 @@ export const LoginRes = z.object({
   code: z.number(),
   data: z.object({
     token: z.string(),
-    authenticated: z.boolean()
+    expiryTime: z.string()
   })
 })
 

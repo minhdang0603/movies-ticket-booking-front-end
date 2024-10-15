@@ -1,7 +1,5 @@
-import authApiRequest from "@/apiRequests/auth";
+import authApiRequest from "@/services/auth";
 import { HttpError } from "@/lib/http";
-import { decodeJWT } from "@/lib/utils";
-import { PayloadJWT } from "@/type";
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
@@ -16,9 +14,7 @@ export async function POST(request: Request) {
     try {
         const res = await authApiRequest.refreshTokenFromNextServerToServer({ token: accessToken.value });
         const newAccessToken = res.payload.data.token;
-
-        const payload = decodeJWT<PayloadJWT>(newAccessToken);
-        const newExpireAt = new Date(payload.exp * 1000).toUTCString();
+        const newExpireAt = new Date(res.payload.data.expiryTime).toUTCString();
 
         return Response.json(res.payload, {
             status: 200,
