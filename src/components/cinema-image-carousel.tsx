@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function CinemaImageCarousel({ images }: {
     images: string[]
@@ -17,11 +17,11 @@ function CinemaImageCarousel({ images }: {
         setCurrentIndex(newIndex);
     };
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => { 
         const isLastSlide = currentIndex === images.length - 1;
         const newIndex = isLastSlide ? 0 : currentIndex + 1;
         setCurrentIndex(newIndex);
-    };
+    }, [currentIndex, images.length]);
 
     useEffect(() => {
         if (!isHovered) {
@@ -31,7 +31,7 @@ function CinemaImageCarousel({ images }: {
 
             return () => clearInterval(interval);
         }
-    }, [currentIndex, isHovered]);
+    }, [isHovered, nextSlide]);
 
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -55,10 +55,10 @@ function CinemaImageCarousel({ images }: {
                     className='w-full h-full bg-center bg-cover duration-500 ease-in-out transition-all'
                 />
             </div>
-            <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 traslate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+            <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
                 <ChevronLeft size={30} onClick={prevSlide} />
             </div>
-            <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 traslate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+            <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
                 <ChevronRight size={30} onClick={nextSlide} />
             </div>
         </div>

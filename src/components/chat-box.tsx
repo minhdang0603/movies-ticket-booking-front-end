@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,33 +27,6 @@ const ChatBox = ({ recipientEmail, messageList, senderEmail, recipientName }: {
 
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const stompClient = useRef<Client | null>(null);
-
-    useEffect(() => {
-        connect();
-        scrollToBottom();
-        return () => {
-            if (stompClient.current) {
-                stompClient.current.deactivate();
-            }
-        };
-    }, []);
-
-    const connect = () => {
-        const client = new Client({
-            webSocketFactory: () => new SockJS(envConfig.NEXT_PUBLIC_API_ENDPOINT + '/ws'),
-            connectHeaders: {
-                Authorization: `Bearer ${clientAccessToken.value}`
-            },
-            onConnect: handleConnected,
-            onStompError: (frame) => {
-                console.error('Broker reported error: ' + frame.headers['message']);
-                console.error('Additional details: ' + frame.body);
-            },
-        });
-
-        client.activate();
-        stompClient.current = client;
-    };
 
     const onSubmit = (values: MessageBodyType) => {
         if (values.content.trim() === '') return;
@@ -89,10 +62,6 @@ const ChatBox = ({ recipientEmail, messageList, senderEmail, recipientName }: {
         form.reset();
     };
 
-    const handleConnected = () => {
-        stompClient.current?.subscribe(`/user/${senderEmail}/queue/messages`, onMessageReceived);
-    };
-
     const onMessageReceived = (payload: IMessage) => {
         const messageData = JSON.parse(payload.body);
 
@@ -107,6 +76,37 @@ const ChatBox = ({ recipientEmail, messageList, senderEmail, recipientName }: {
             scrollRef.current!.scrollTop = scrollRef.current!.scrollHeight;
         }
     };
+
+    const handleConnected = () => {
+        stompClient.current?.subscribe(`/user/${senderEmail}/queue/messages`, onMessageReceived);
+    };
+    
+    const connect = useCallback(() => {
+        const client = new Client({
+            webSocketFactory: () => new SockJS(envConfig.NEXT_PUBLIC_API_ENDPOINT + '/ws'),
+            connectHeaders: {
+                Authorization: `Bearer ${clientAccessToken.value}`
+            },
+            onConnect: handleConnected,
+            onStompError: (frame) => {
+                console.error('Broker reported error: ' + frame.headers['message']);
+                console.error('Additional details: ' + frame.body);
+            },
+        });
+        
+        client.activate();
+        stompClient.current = client;
+    }, [senderEmail, handleConnected]);
+
+    useEffect(() => {
+        connect();
+        scrollToBottom();
+        return () => {
+            if (stompClient.current) {
+                stompClient.current.deactivate();
+            }
+        };
+    }, [connect]); 
 
     useEffect(() => {
         scrollToBottom();

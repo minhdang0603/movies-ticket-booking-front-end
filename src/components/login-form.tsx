@@ -171,7 +171,7 @@ function LoginForm() {
           )}
         </Button>
         <div className="text-center">
-          <span>Don't have an account?</span>
+          <span>Don&apos;t have an account?</span>
           <Link href="/register" passHref>
             <Button variant={"link"}>Sign up</Button>
           </Link>

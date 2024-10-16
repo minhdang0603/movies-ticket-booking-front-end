@@ -52,7 +52,7 @@ export default function MapBox({ latitude, longitude }: { latitude: string, long
         anchor="center"
       />
     ),
-    []
+    [latitude, longitude]
   );
 
   const getRoute = async () => {
