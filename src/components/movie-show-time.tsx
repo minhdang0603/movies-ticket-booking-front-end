@@ -226,7 +226,7 @@ export default function MovieShowTime({
 			<Separator className="w-full h-[2px] bg-[#034ea2] my-4" />
 			<div>
 				{loading ? (
-					<div className="text-center">
+					<div className="flex justify-center items-center h-full">
 						<Loader2 className="animate-spin w-10 h-10 text-primary" />
 					</div>
 				) : shows.length > 0 ? (
