@@ -12,7 +12,7 @@ export default async function ChatPage() {
     const messageList = messagesResponse.payload.data;
     return (
         <div className='h-[500px] max-w-3xl mx-auto'>
-            <ChatBox recipientEmail={'admin@gmail.com'} messageList={messageList} senderEmail={myInfo.email} recipientName='Amind' />
+            <ChatBox recipientEmail={'admin@gmail.com'} messageList={messageList} senderEmail={myInfo.email} recipientName='Admin' />
         </div>
     )
 }
