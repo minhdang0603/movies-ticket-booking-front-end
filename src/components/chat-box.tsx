@@ -96,7 +96,7 @@ const ChatBox = ({ recipientEmail, messageList, senderEmail, recipientName }: {
         
         client.activate();
         stompClient.current = client;
-    }, [senderEmail, handleConnected]);
+    }, [handleConnected]);
 
     useEffect(() => {
         connect();

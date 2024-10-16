@@ -19,6 +19,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 type Cinema = CinemaResType["data"];
 
@@ -51,6 +52,7 @@ export default function MovieShowTime({
 	const [cinemas, setCinemas] = useState<Cinema[]>([]);
 	const [selectedCinemaId, setSelectedCinemaId] = useState<string>("0");
 	const [shows, setShows] = useState<ShowsList>([]);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const days = Array.from({ length: 7 }, (_, i) => {
 		const day = new Date(today);
@@ -74,6 +76,7 @@ export default function MovieShowTime({
 
 	useEffect(() => {
 		const listShows = async () => {
+			setLoading(true);
 			let res;
 			if (selectedCinemaId === "0") {
 				res = await getShows({
@@ -90,6 +93,7 @@ export default function MovieShowTime({
 			}
 
 			setShows(res);
+			setLoading(false);
 		};
 
 		listShows();
@@ -221,7 +225,9 @@ export default function MovieShowTime({
 			</div>
 			<Separator className="w-full h-[2px] bg-[#034ea2] my-4" />
 			<div>
-				{shows.length > 0 ? (
+				{loading ? (
+					<Loader2 className="animate-spin w-10 h-10 text-primary" />
+				) : shows.length > 0 ? (
 					Object.values(showsByCinema).map((cinemaGroup, cinemaIndex) => (
 						<div
 							className="md:py-8 py-4 px-3 odd:bg-white even:bg-[#FDFBFA] even:border-t even:border-b"
