@@ -1,6 +1,6 @@
 'use client'
 
-import { useApp } from '@/app/AppProvider'
+import { useAppContext } from '@/app/AppProvider'
 import { Button } from '@/components/ui/button'
 import { normalizeTitle } from '@/lib/utils'
 import { MovieListResType } from '@/schemaValidations/movie.schema'
@@ -13,7 +13,7 @@ export default function MoviesList({ moviesList }: {
     moviesList: MovieListResType['data']
 }) {
 
-    const { openTrailer } = useApp();
+    const { dispatch } = useAppContext();
 
     return (
         <>
@@ -50,7 +50,7 @@ export default function MoviesList({ moviesList }: {
                                         Mua vé
                                     </Link>
                                     <Button
-                                        onClick={() => openTrailer(movie.trailer)}
+                                        onClick={() => dispatch({type: 'OPEN_TRAILER', payload: movie.trailer})}
                                         type='button'
                                         variant={'ghost'}
                                         disabled={movie.trailer ? false : true}

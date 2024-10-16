@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Role } from "./common.schema";
-import { AudioSchema, ShowSchema } from "./show.schema";
+import { AudioSchema } from "./show.schema";
 import { MovieSchema } from "./movie.schema";
 import { CinemaSchema } from "./cinema.schema";
 

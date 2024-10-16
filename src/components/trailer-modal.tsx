@@ -1,10 +1,10 @@
 'use client';
 
-import { useApp } from '@/app/AppProvider';
+import { useAppContext } from '@/app/AppProvider';
 import React, { useState } from 'react';
 
 const TrailerModal = () => {
-    const { videoUrl, isModalOpen, closeTrailer } = useApp();
+    const { videoUrl, isModalOpen, dispatch } = useAppContext();
     const [isClosing, setIsClosing] = useState(false);
 
 
@@ -12,7 +12,7 @@ const TrailerModal = () => {
         setIsClosing(true);
         setTimeout(() => {
             setIsClosing(false);
-            closeTrailer();
+            dispatch({type: 'CLOSE_TRAILER'});
         }, 300);
     };
 
