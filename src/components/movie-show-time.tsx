@@ -226,7 +226,9 @@ export default function MovieShowTime({
 			<Separator className="w-full h-[2px] bg-[#034ea2] my-4" />
 			<div>
 				{loading ? (
-					<Loader2 className="animate-spin w-10 h-10 text-primary" />
+					<div className="text-center">
+						<Loader2 className="animate-spin w-10 h-10 text-primary" />
+					</div>
 				) : shows.length > 0 ? (
 					Object.values(showsByCinema).map((cinemaGroup, cinemaIndex) => (
 						<div
