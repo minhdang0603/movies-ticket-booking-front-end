@@ -102,7 +102,7 @@ const ChatBox = ({
 
 		client.activate();
 		stompClient.current = client;
-	}, [handleConnected]);
+	}, [senderEmail, handleConnected]);
 
 	useEffect(() => {
 		connect();
