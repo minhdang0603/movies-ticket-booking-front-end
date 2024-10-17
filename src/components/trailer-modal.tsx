@@ -1,6 +1,6 @@
 'use client';
 
-import { useAppContext } from '@/app/AppProvider';
+import { useAppContext } from "@/app/context/AppProvider";
 import React, { useState } from 'react';
 
 const TrailerModal = () => {

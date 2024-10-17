@@ -1,6 +1,6 @@
 'use client'
 
-import { useAppContext } from '@/app/AppProvider'
+import { useAppContext } from '@/app/context/AppProvider' 
 import { Button } from '@/components/ui/button'
 import { normalizeTitle } from '@/lib/utils'
 import { MovieListResType } from '@/schemaValidations/movie.schema'

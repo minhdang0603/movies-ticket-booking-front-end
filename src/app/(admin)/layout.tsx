@@ -1,12 +1,11 @@
 import AdminAside from "@/components/admin-aside";
 import AdminHeader from "@/components/headers/admin-header";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Metadata } from "next";
 import "../globals.css";
 import { Inter, Nunito_Sans } from "next/font/google";
 import { cookies } from "next/headers";
 import React from "react";
-import AppProvider from "../AppProvider";
+import AppProvider from "../context/AppProvider";
 import RefreshToken from "@/components/refresh-token";
 import { Toaster } from "@/components/ui/toaster";
 

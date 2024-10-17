@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Client, IMessage } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import envConfig from "@/config";
 import { clientAccessToken } from "@/lib/http";
 import {
@@ -18,6 +17,7 @@ import { CircleUserRound, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
+import SockJS from "sockjs-client";
 
 const ChatBox = ({
 	recipientEmail,
@@ -32,7 +32,6 @@ const ChatBox = ({
 }) => {
 	const [messages, setMessages] =
 		useState<MessageListResType["data"]>(messageList);
-
 	const scrollRef = useRef<HTMLDivElement | null>(null);
 	const stompClient = useRef<Client | null>(null);
 
@@ -53,9 +52,13 @@ const ChatBox = ({
 
 		form.reset();
 
-		if (values.content && stompClient.current) {
+		if (!stompClient.current?.connected) {
+			return;
+		}
+
+		if (values.content.length > 0) {
 			stompClient.current.publish({
-				destination: "/app/chat",
+				destination: "/app/chat.sendMessage",
 				body: JSON.stringify({
 					senderEmail: senderEmail,
 					recipientEmail: recipientEmail,
@@ -63,7 +66,6 @@ const ChatBox = ({
 					timestamp: new Date(),
 				}),
 			});
-			console.log("Message sent");
 		}
 	};
 
@@ -86,33 +88,34 @@ const ChatBox = ({
 		);
 	};
 
-	const connect = useCallback(() => {
-		const client = new Client({
-			webSocketFactory: () =>
-				new SockJS(envConfig.NEXT_PUBLIC_API_ENDPOINT + "/ws"),
-			connectHeaders: {
-				Authorization: `Bearer ${clientAccessToken.value}`,
-			},
-			onConnect: handleConnected,
-			onStompError: (frame) => {
-				console.error("Broker reported error: " + frame.headers["message"]);
-				console.error("Additional details: " + frame.body);
-			},
-		});
+	const stompConfig = {
+		webSocketFactory: () =>
+			new SockJS(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/ws`),
+		connectHeaders: {
+			Authorization: clientAccessToken.value
+				? `Bearer ${clientAccessToken.value}`
+				: "",
+			"ngrok-skip-browser-warning": "1",
+		},
+		reconnectDelay: 2000,
+		onConnect: handleConnected,
+		onStompError: (error: any) => console.error("STOMP error:", error),
+	};
 
+	const connect = useCallback(() => {
+		const client = new Client(stompConfig);
 		client.activate();
+
 		stompClient.current = client;
-	}, [senderEmail, handleConnected]);
+	}, [stompConfig]);
 
 	useEffect(() => {
 		connect();
 		scrollToBottom();
 		return () => {
-			if (stompClient.current) {
-				stompClient.current.deactivate();
-			}
+			stompClient.current?.deactivate();
 		};
-	}, [connect]);
+	}, []);
 
 	useEffect(() => {
 		scrollToBottom();
@@ -190,7 +193,11 @@ const ChatBox = ({
 							)}
 						/>
 
-						<Button type="submit" variant="outline">
+						<Button
+							type="submit"
+							variant="outline"
+							disabled={!stompClient.current?.connected}
+						>
 							<Send className="w-5 h-5 mr-2" />
 							Send
 						</Button>

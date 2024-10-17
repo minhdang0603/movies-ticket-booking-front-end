@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MapBox from "@/components/map";
-import { useAppContext } from "@/app/AppProvider";
+import { useAppContext } from "@/app/context/AppProvider"; 
 
 type ShowsList = ShowListResType["data"];
 

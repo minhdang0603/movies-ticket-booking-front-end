@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "../globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import AppProvider from "../AppProvider";
+import AppProvider from "../context/AppProvider"; 
 import { cookies } from "next/headers";
 import RefreshToken from "@/components/refresh-token";
 import UserHeader from "@/components/headers/user-header";

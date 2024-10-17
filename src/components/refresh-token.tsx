@@ -15,8 +15,6 @@ export default function RefreshToken() {
 
 
             if (clientAccessToken.value && differenceInMinutes(now, expireAt) < 10) {
-                console.log(1);
-
                 const res = await authApiRequest.refreshTokenFromNextClientToNextServer();
                 const newAccessToken = res.payload.data.token;
                 const payload = decodeJWT<PayloadJWT>(newAccessToken);
