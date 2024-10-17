@@ -95,7 +95,6 @@ const ChatBox = ({
 			Authorization: clientAccessToken.value
 				? `Bearer ${clientAccessToken.value}`
 				: "",
-			"ngrok-skip-browser-warning": "1",
 		},
 		reconnectDelay: 2000,
 		onConnect: handleConnected,
