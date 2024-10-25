@@ -68,7 +68,7 @@ const request = async <Response>(
 		Authorization: clientAccessToken.value
 			? `Bearer ${clientAccessToken.value}`
 			: "",
-		"ngrok-skip-browser-warning": "69420",
+		// "ngrok-skip-browser-warning": "69430",
 	};
 
 	// Nếu không truyền baseUrl hoặc baseUrl = undefined thì lấy giá trị từ envConfig.NEXT_PUBLIC_API_ENDPOINT
