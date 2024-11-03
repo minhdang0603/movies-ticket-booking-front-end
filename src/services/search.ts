@@ -6,9 +6,11 @@ import {
 
 const searchApiRequest = {
 	searchMovie: (query: string) =>
-		http.get<SearchMovieResType>(`/search/movie?query=${query}`),
+		http.get<SearchMovieResType>(`/search/demo?query=${query}`),
 	searchCinema: (query: string, lat: number, lon: number) =>
-		http.get<SearchCinemaResType>(`/search/cinema?query=${query}&lat=${lat}&lon=${lon}`),
+		http.get<SearchCinemaResType>(
+			`/search/cinema?query=${query}&lat=${lat}&lon=${lon}`
+		),
 };
 
 export default searchApiRequest;
